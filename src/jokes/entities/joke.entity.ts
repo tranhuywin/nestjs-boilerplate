@@ -7,4 +7,10 @@ export class Joke {
 
   @Column('text')
   content: string;
+
+  @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
 }

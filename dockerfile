@@ -1,11 +1,9 @@
-FROM mysql
+FROM postgres:latest
 
-# Define environment variables for MySQL
-ENV MYSQL_ROOT_PASSWORD=password
-ENV MYSQL_DATABASE=joke
-ENV MYSQL_USER=user
-ENV MYSQL_PASSWORD=password
+ENV POSTGRES_USER=user
+ENV POSTGRES_PASSWORD=password
+ENV POSTGRES_DB=database
 
-EXPOSE 3306
+# COPY ./init.sql /docker-entrypoint-initdb.d/
 
-CMD ["mysqld"]
+EXPOSE 5432

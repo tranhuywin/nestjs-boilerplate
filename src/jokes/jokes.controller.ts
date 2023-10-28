@@ -8,10 +8,7 @@ export class JokesController {
   constructor(private readonly jokesService: JokesService) {}
 
   @Get('/random')
-  async findRandom(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
-  ) {
+  async findRandom(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const exceptIds = req.cookies[VIEWS] || [];
     const joke = await this.jokesService.findRandom(exceptIds);
     if (joke) {

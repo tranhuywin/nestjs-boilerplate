@@ -1,18 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
 import { Joke } from './entities/joke.entity';
-import { JOKE_REPOSITORY } from 'src/constants/providers.constant';
 
 @Injectable()
 export class JokesService {
   constructor(
-    @Inject(JOKE_REPOSITORY)
-    private jokeRepository: Repository<Joke>,
+    @InjectRepository(Joke)
+    private readonly jokeRepository: Repository<Joke>,
   ) {}
-
-  async onModuleInit() {
-    await this.seedDatabase();
-  }
 
   async findRandom(exceptIds: number[] = []) {
     let queryBuilder = this.jokeRepository.createQueryBuilder();
@@ -30,7 +27,7 @@ export class JokesService {
   }
 
   async findAll() {
-    return this.jokeRepository.find();
+    return await this.jokeRepository.find();
   }
 
   async seedDatabase() {
