@@ -1,6 +1,3 @@
-NODE version 18.19.1 (node)
-YARN version 1.22.19 (yarn)
-
 install project
 ```
 yarn install

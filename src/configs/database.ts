@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { join } from 'path';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 export const dbConfig = (): PostgresConnectionOptions => ({
   type: 'postgres',
@@ -15,6 +16,7 @@ export const dbConfig = (): PostgresConnectionOptions => ({
   migrationsRun: false,
   logging: false,
   migrations: [join(__dirname, '../migrations/**/*.{ts,js}')],
+  namingStrategy: new SnakeNamingStrategy(),
 });
 
 if (process.env.NODE_ENV === 'development') {
