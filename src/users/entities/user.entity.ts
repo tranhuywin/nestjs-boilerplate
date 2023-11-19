@@ -1,12 +1,15 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Joke {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('text')
-  content: string;
+  @Column()
+  userName: string;
+
+  @Column()
+  password: string;
 
   @CreateDateColumn()
   createdAt: Date;
