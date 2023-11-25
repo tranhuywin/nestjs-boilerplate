@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import configuration, { IConfig } from './configs';
+import configuration, { IConfig } from 'src/configs';
 import { UsersModule } from './users/users.module';
+import { RequestTimingMiddleware } from '@middlewares/requestTiming.middleware';
 
 @Module({
   imports: [
@@ -18,4 +19,8 @@ import { UsersModule } from './users/users.module';
     }),
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestTimingMiddleware).forRoutes('*');
+  }
+}
