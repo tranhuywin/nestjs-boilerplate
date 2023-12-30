@@ -6,10 +6,16 @@ export class User {
   id: string;
 
   @Column()
-  userName: string;
+  fullName: string;
 
   @Column()
-  password: string;
+  phoneNumber: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  jobTitle: string;
 
   @CreateDateColumn()
   createdAt: Date;
