@@ -9,12 +9,12 @@ yarn install
 
 docker build
 ```
-docker build -t my-postgres .
+docker build -t nestjs-app .
 ```
 
 docker run 
 ```
- docker run -d --name my-postgres-container -p 5432:5432 my-postgres
+ docker run nestjs-app
 ```
 
 start project

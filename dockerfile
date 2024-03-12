@@ -1,9 +1,13 @@
-FROM postgres:latest
+FROM node:18.16.0-slim
 
-ENV POSTGRES_USER=user
-ENV POSTGRES_PASSWORD=password
-ENV POSTGRES_DB=database
+WORKDIR /server/
 
-# COPY ./init_user.sql /docker-entrypoint-initdb.d/
+COPY package.json yarn.lock /server/
 
-EXPOSE 5432
+RUN yarn install
+
+COPY . /server
+
+RUN yarn build
+
+CMD ["yarn", "start"]
