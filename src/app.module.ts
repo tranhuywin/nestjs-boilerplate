@@ -1,13 +1,17 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import configuration, { IConfig } from 'src/configs';
+import { RequestTimingMiddleware } from 'src/middlewares/request-timing.middleware';
+
+import { AuthModule } from './auth/auth.module';
+import { PaymentsModule } from './payments/payments.module';
+import { StripeModule } from './stripe/stripe.module';
 import { UsersModule } from './users/users.module';
-import { RequestTimingMiddleware } from '@middlewares/requestTiming.middleware';
 
 @Module({
   imports: [
-    UsersModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
@@ -17,6 +21,10 @@ import { RequestTimingMiddleware } from '@middlewares/requestTiming.middleware';
       useFactory: (configService: ConfigService<IConfig>) => configService.get('database'),
       inject: [ConfigService],
     }),
+    StripeModule.forRoot(process.env.STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' }),
+    UsersModule,
+    AuthModule,
+    PaymentsModule,
   ],
 })
 export class AppModule implements NestModule {

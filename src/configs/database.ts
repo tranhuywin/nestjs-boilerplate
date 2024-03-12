@@ -1,7 +1,8 @@
 import { Logger } from '@nestjs/common';
-import { join } from 'path';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+
+import { join } from 'path';
 
 export const dbConfig = (): PostgresConnectionOptions => ({
   type: 'postgres',

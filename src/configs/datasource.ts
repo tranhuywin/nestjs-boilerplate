@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
 import { DataSource } from 'typeorm';
+
 import { dbConfig } from './database';
 
 config();

@@ -1,4 +1,5 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+
 import { dbConfig } from './database';
 
 export interface IConfig {
@@ -10,6 +11,11 @@ export interface IConfig {
     publicKey: string;
   };
   postgresHost: string;
+  jwtSecretKey: string;
+  stripe: {
+    publishableKey: string;
+    secretKey: string;
+  };
 }
 
 export default (): Partial<IConfig> => ({
@@ -21,4 +27,9 @@ export default (): Partial<IConfig> => ({
     publicKey: process.env.PUBLIC_KEY,
   },
   postgresHost: process.env.POSTGRES_HOST || 'localhost',
+  jwtSecretKey: process.env.JWT_SECRET_KEY,
+  stripe: {
+    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    secretKey: process.env.STRIPE_SECRET_KEY,
+  },
 });

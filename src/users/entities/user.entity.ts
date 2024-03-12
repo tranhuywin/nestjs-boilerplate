@@ -1,20 +1,33 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { genSalt, hash } from 'bcrypt';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  fullName: string;
-
-  @Column()
-  phoneNumber: string;
-
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
+  password: string;
+
+  @Column({ nullable: true })
+  fullName: string;
+
+  @Column({ nullable: true })
+  phoneNumber: string;
+
+  @Column({ nullable: true })
   jobTitle: string;
 
   @CreateDateColumn()
@@ -25,4 +38,11 @@ export class User {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @BeforeUpdate()
+  @BeforeInsert()
+  private async hashPassword(): Promise<void> {
+    const salt = await genSalt();
+    this.password = await hash(this.password, salt);
+  }
 }
