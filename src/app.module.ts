@@ -1,5 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import configuration, { IConfig } from 'src/configs';
@@ -9,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { PaymentsModule } from './payments/payments.module';
 import { StripeModule } from './stripe/stripe.module';
 import { UsersModule } from './users/users.module';
+import { EmailsModule } from './emails/emails.module';
 
 @Module({
   imports: [
@@ -22,9 +24,11 @@ import { UsersModule } from './users/users.module';
       inject: [ConfigService],
     }),
     StripeModule.forRoot(process.env.STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' }),
+    EventEmitterModule.forRoot(),
     UsersModule,
     AuthModule,
     PaymentsModule,
+    EmailsModule,
   ],
 })
 export class AppModule implements NestModule {

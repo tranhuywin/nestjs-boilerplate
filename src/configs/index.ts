@@ -16,6 +16,10 @@ export interface IConfig {
     publishableKey: string;
     secretKey: string;
   };
+  mailer: {
+    user: string;
+    pass: string;
+  };
 }
 
 export default (): Partial<IConfig> => ({
@@ -31,5 +35,9 @@ export default (): Partial<IConfig> => ({
   stripe: {
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     secretKey: process.env.STRIPE_SECRET_KEY,
+  },
+  mailer: {
+    user: process.env.MAILER_AUTH_USER,
+    pass: process.env.MAILER_AUTH_PASS,
   },
 });

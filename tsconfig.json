@@ -19,8 +19,9 @@
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": true,
     "paths": {
-      "@configs/*": ["src/configs/*"],
-      "@middlewares/*": ["src/middlewares/*"],
+      "configs/*": ["src/configs/*"],
+      "middlewares/*": ["src/middlewares/*"],
+      "constants/*": ["src/constants/*"],
     }
   }
 }

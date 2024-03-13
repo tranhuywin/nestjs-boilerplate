@@ -1,4 +1,6 @@
 .git
 .gitignore
+dist
+.vscode
 node_modules
 README.md

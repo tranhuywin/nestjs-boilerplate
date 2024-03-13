@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 
@@ -15,8 +15,10 @@ export class AuthService {
 
   async signIn({ email, password }: { email: string; password: string }): Promise<{ accessToken: string }> {
     const user = await this.usersService.findOneByEmail(email);
+    if (!user) throw new NotFoundException('User email is not exist');
+
     const isPasswordValid = await compare(password, user.password);
-    if (!user || !isPasswordValid) {
+    if (!isPasswordValid) {
       throw new UnauthorizedException();
     }
 
