@@ -36,10 +36,13 @@
     "cookie-parser": "^1.4.6",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21",
+    "nest-winston": "^1.9.4",
     "nodemailer": "^6.9.12",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.17",
+    "winston": "^3.12.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
