@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
-import Stripe from 'stripe';
+import { Inject, Injectable } from '@nestjs/common'
+import Stripe from 'stripe'
 
-import { STRIPE_CLIENT } from 'src/stripe/constants';
+import { STRIPE_CLIENT } from 'src/stripe/constants'
 
 // cus_Pcs1SZTUhSAMSF
 
@@ -13,13 +13,13 @@ export class PaymentsService {
   ) {}
 
   listCustomers() {
-    return this.stripe.customers.list();
+    return this.stripe.customers.list()
   }
 
   async addCardToCustomer({ customerId, cardToken }: { customerId: string; cardToken: string }) {
     return this.stripe.customers.createSource(customerId, {
       source: cardToken,
-    });
+    })
   }
 
   async chargeCard({
@@ -27,12 +27,12 @@ export class PaymentsService {
     customerId: _customerId,
     productId: _productId,
   }: {
-    amount: number;
-    customerId: string;
-    productId: string;
+    amount: number
+    customerId: string
+    productId: string
   }) {
-    const _a = 1;
-    const _b = 2;
-    return '';
+    const _a = 1
+    const _b = 2
+    return ''
   }
 }

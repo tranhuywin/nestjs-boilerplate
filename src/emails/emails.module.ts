@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { MailerModule } from '@nestjs-modules/mailer'
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter'
 
-import { join } from 'path';
+import { join } from 'path'
 
-import { IConfig } from 'src/configs';
+import { IConfig } from 'src/configs'
 
-import { EmailsService } from './emails.service';
+import { EmailsService } from './emails.service'
 
 @Module({
   imports: [

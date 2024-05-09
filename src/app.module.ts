@@ -1,16 +1,15 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { EventEmitterModule } from '@nestjs/event-emitter';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { EventEmitterModule } from '@nestjs/event-emitter'
+import { TypeOrmModule } from '@nestjs/typeorm'
 
-import configuration, { IConfig } from 'src/configs';
-import { RequestTimingMiddleware } from 'src/middlewares/request-timing.middleware';
-
-import { AuthModule } from './auth/auth.module';
-import { PaymentsModule } from './payments/payments.module';
-import { StripeModule } from './stripe/stripe.module';
-import { UsersModule } from './users/users.module';
-import { EmailsModule } from './emails/emails.module';
+import { AuthModule } from './auth/auth.module'
+import configuration, { IConfig } from './configs'
+import { EmailsModule } from './emails/emails.module'
+import { RequestTimingMiddleware } from './middlewares/request-timing.middleware'
+import { PaymentsModule } from './payments/payments.module'
+import { StripeModule } from './stripe/stripe.module'
+import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
@@ -33,6 +32,6 @@ import { EmailsModule } from './emails/emails.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(RequestTimingMiddleware).forRoutes('*');
+    consumer.apply(RequestTimingMiddleware).forRoutes('*')
   }
 }

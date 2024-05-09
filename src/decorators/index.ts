@@ -1,1 +1,1 @@
-export { JwtPayload } from './jwt-payload.decorator';
+export { JwtPayload } from './jwt-payload.decorator'

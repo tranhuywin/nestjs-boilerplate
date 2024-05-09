@@ -1,25 +1,25 @@
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions'
 
-import { dbConfig } from './database';
+import { dbConfig } from './database'
 
 export interface IConfig {
-  env: string;
-  port: number;
-  database: PostgresConnectionOptions;
+  env: string
+  port: number
+  database: PostgresConnectionOptions
   keys: {
-    privateKey: string;
-    publicKey: string;
-  };
-  postgresHost: string;
-  jwtSecretKey: string;
+    privateKey: string
+    publicKey: string
+  }
+  postgresHost: string
+  jwtSecretKey: string
   stripe: {
-    publishableKey: string;
-    secretKey: string;
-  };
+    publishableKey: string
+    secretKey: string
+  }
   mailer: {
-    user: string;
-    pass: string;
-  };
+    user: string
+    pass: string
+  }
 }
 
 export default (): Partial<IConfig> => ({
@@ -40,4 +40,4 @@ export default (): Partial<IConfig> => ({
     user: process.env.MAILER_AUTH_USER,
     pass: process.env.MAILER_AUTH_PASS,
   },
-});
+})

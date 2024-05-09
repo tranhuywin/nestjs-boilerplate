@@ -1,8 +1,8 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common'
 
-import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { AuthGuard } from 'src/auth/guards/auth.guard'
 
-import { PaymentsService } from './payments.service';
+import { PaymentsService } from './payments.service'
 
 @Controller('payments')
 export class PaymentsController {
@@ -11,7 +11,7 @@ export class PaymentsController {
   @Post('add-card')
   @UseGuards(AuthGuard)
   addCard() {
-    return this.paymentsService.addCardToCustomer({ customerId: 'cus_Pcs1SZTUhSAMSF', cardToken: 'tok_visa' });
+    return this.paymentsService.addCardToCustomer({ customerId: 'cus_Pcs1SZTUhSAMSF', cardToken: 'tok_visa' })
   }
 
   @Post('charge')
@@ -21,6 +21,6 @@ export class PaymentsController {
       amount: body.amount,
       customerId: body.customerId,
       productId: body.productId,
-    });
+    })
   }
 }

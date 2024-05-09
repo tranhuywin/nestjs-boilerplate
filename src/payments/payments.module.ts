@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common'
 
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from 'src/auth/auth.module'
 
-import { PaymentsController } from './payments.controller';
-import { PaymentsService } from './payments.service';
+import { PaymentsController } from './payments.controller'
+import { PaymentsService } from './payments.service'
 
 @Module({
   imports: [AuthModule],

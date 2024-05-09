@@ -1,4 +1,4 @@
-import { genSalt, hash } from 'bcrypt';
+import { genSalt, hash } from 'bcrypt'
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -8,41 +8,41 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from 'typeorm'
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string
 
   @Column({ unique: true })
-  email: string;
+  email: string
 
   @Column()
-  password: string;
+  password: string
 
   @Column({ nullable: true })
-  fullName: string;
+  fullName: string
 
   @Column({ nullable: true })
-  phoneNumber: string;
+  phoneNumber: string
 
   @Column({ nullable: true })
-  jobTitle: string;
+  jobTitle: string
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deletedAt: Date
 
   @BeforeUpdate()
   @BeforeInsert()
   private async hashPassword(): Promise<void> {
-    const salt = await genSalt();
-    this.password = await hash(this.password, salt);
+    const salt = await genSalt()
+    this.password = await hash(this.password, salt)
   }
 }

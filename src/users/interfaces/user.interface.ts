@@ -1,15 +1,15 @@
-import { OmitType, PartialType } from '@nestjs/mapped-types';
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { OmitType, PartialType } from '@nestjs/mapped-types'
+import { IsEmail, IsNotEmpty } from 'class-validator'
 
-import { User } from 'src/users/entities/user.entity';
+import { User } from 'src/users/entities/user.entity'
 
 export class CreateUserDTO {
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email: string
 
   @IsNotEmpty()
-  password: string;
+  password: string
 }
 
 export class UpdateUserDTO extends OmitType(PartialType(User), ['password']) {}

@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { OnEvent } from '@nestjs/event-emitter';
-import { MailerService } from '@nestjs-modules/mailer';
+import { Injectable } from '@nestjs/common'
+import { OnEvent } from '@nestjs/event-emitter'
+import { MailerService } from '@nestjs-modules/mailer'
 
-import { ON_EVENT_NAMES } from 'constants/on-event-names.constant';
+import { ON_EVENT_NAMES } from 'constants/on-event-names.constant'
 
 @Injectable()
 export class EmailsService {
@@ -10,7 +10,7 @@ export class EmailsService {
 
   @OnEvent(ON_EVENT_NAMES.USER_WELCOME)
   async welcomeUser(data: { email: string; name: string }) {
-    const { email, name } = data;
+    const { email, name } = data
 
     this.mailerService
       .sendMail({
@@ -22,7 +22,7 @@ export class EmailsService {
         },
       })
       .catch((error) => {
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 }
