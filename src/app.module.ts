@@ -2,13 +2,16 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { DataSource, DataSourceOptions } from 'typeorm'
+import { addTransactionalDataSource } from 'typeorm-transactional'
 
+import '@/boilerplate.polyfill'
+
+import { AppController } from './app.controller'
 import { AuthModule } from './auth/auth.module'
 import configuration, { IConfig } from './configs'
 import { EmailsModule } from './emails/emails.module'
 import { RequestTimingMiddleware } from './middlewares/request-timing.middleware'
-import { PaymentsModule } from './payments/payments.module'
-import { StripeModule } from './stripe/stripe.module'
 import { UsersModule } from './users/users.module'
 
 @Module({
@@ -19,19 +22,30 @@ import { UsersModule } from './users/users.module'
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService<IConfig>) => configService.get('database'),
+      useFactory: (configService: ConfigService<IConfig>) => {
+        const dbConfig = configService.get('database')
+        if (!dbConfig) {
+          throw new Error('Database configuration is missing')
+        }
+        return dbConfig
+      },
       inject: [ConfigService],
+      dataSourceFactory: async (options?: DataSourceOptions) => {
+        if (!options) {
+          throw new Error('Invalid options passed')
+        }
+        return addTransactionalDataSource(new DataSource(options))
+      },
     }),
-    StripeModule.forRoot(process.env.STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' }),
     EventEmitterModule.forRoot(),
     UsersModule,
     AuthModule,
-    PaymentsModule,
     EmailsModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
+  configure(consumer: MiddlewareConsumer): void {
     consumer.apply(RequestTimingMiddleware).forRoutes('*')
   }
 }

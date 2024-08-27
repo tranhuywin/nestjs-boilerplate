@@ -2,7 +2,7 @@ import { Controller, Post, Body, Res } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { Response } from 'express'
 
-import { ON_EVENT_NAMES } from 'constants/on-event-names.constant'
+import { ON_EVENT_NAMES } from '@/constants'
 
 import { AuthService } from './auth.service'
 import { CreateUserDTO, LoginDTO } from './dto'
@@ -15,7 +15,10 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  async login(@Body() createAuthDto: LoginDTO, @Res({ passthrough: true }) response: Response) {
+  async login(
+    @Body() createAuthDto: LoginDTO,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<{ message: string }> {
     const { accessToken } = await this.authService.signIn(createAuthDto)
     response.cookie('accessToken', accessToken)
     return {
@@ -24,7 +27,10 @@ export class AuthController {
   }
 
   @Post('register')
-  async register(@Body() createAuthDto: CreateUserDTO, @Res({ passthrough: true }) response: Response) {
+  async register(
+    @Body() createAuthDto: CreateUserDTO,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<{ message: string }> {
     const { accessToken } = await this.authService.signUp(createAuthDto)
     response.cookie('accessToken', accessToken)
 

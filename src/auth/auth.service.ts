@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { JwtService } from '@nestjs/jwt'
 import { compare } from 'bcrypt'
 
-import { UsersService } from 'src/users/users.service'
+import { UsersService } from '@/users/users.service'
 
 import { IJwtPayload } from './interfaces/auth.interface'
 
@@ -13,8 +13,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn({ email, password }: { email: string; password: string }): Promise<{ accessToken: string }> {
-    const user = await this.usersService.findOneByEmail(email)
+  async signIn({
+    email,
+    password,
+  }: {
+    email: string
+    password: string
+  }): Promise<{ accessToken: string }> {
+    const user = await this.usersService.findOneBy({ email })
     if (!user) throw new NotFoundException('User email is not exist')
 
     const isPasswordValid = await compare(password, user.password)
@@ -29,7 +35,13 @@ export class AuthService {
     }
   }
 
-  async signUp({ email, password }: { email: string; password: string }) {
+  async signUp({
+    email,
+    password,
+  }: {
+    email: string
+    password: string
+  }): Promise<{ accessToken: string }> {
     const newUser = await this.usersService.create({ email: email, password: password })
     const payload = { sub: newUser.id, email: newUser.email }
     return {

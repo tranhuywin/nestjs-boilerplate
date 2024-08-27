@@ -1,6 +1,8 @@
 import { config } from 'dotenv'
 import { DataSource } from 'typeorm'
 
+import '@/boilerplate.polyfill'
+
 import { dbConfig } from './database'
 
 config()

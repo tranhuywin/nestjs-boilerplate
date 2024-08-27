@@ -1,20 +1,10 @@
 import { genSalt, hash } from 'bcrypt'
-import {
-  BeforeInsert,
-  BeforeUpdate,
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm'
+import { BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity } from 'typeorm'
 
-@Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string
+import { AbstractEntity } from '@/core/abstract.entity'
 
+@Entity('user')
+export class UserEntity extends AbstractEntity {
   @Column({ unique: true })
   email: string
 
@@ -27,21 +17,15 @@ export class User {
   @Column({ nullable: true })
   phoneNumber: string
 
-  @Column({ nullable: true })
-  jobTitle: string
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
-
   @DeleteDateColumn()
   deletedAt: Date
 
   @BeforeUpdate()
   @BeforeInsert()
-  private async hashPassword(): Promise<void> {
+  hashPassword = async (): Promise<void> => {
+    if (!this.password) {
+      return
+    }
     const salt = await genSalt()
     this.password = await hash(this.password, salt)
   }

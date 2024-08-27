@@ -1,10 +1,9 @@
-import { IsEmail, IsNotEmpty } from 'class-validator'
+import { EmailField, PasswordField } from '@/decorators'
 
 export class CreateUserDTO {
-  @IsEmail()
-  @IsNotEmpty()
+  @EmailField()
   email: string
 
-  @IsNotEmpty()
+  @PasswordField()
   password: string
 }

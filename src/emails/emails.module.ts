@@ -5,7 +5,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 
 import { join } from 'path'
 
-import { IConfig } from 'src/configs'
+import { IConfig } from '@/configs'
 
 import { EmailsService } from './emails.service'
 
@@ -14,14 +14,14 @@ import { EmailsService } from './emails.service'
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService<IConfig>) => ({
         transport: {
           host: 'smtp.gmail.com',
           port: 465,
           secure: true,
           auth: {
-            user: configService.get<IConfig['mailer']>('mailer').user,
-            pass: configService.get<IConfig['mailer']>('mailer').pass,
+            user: configService.get('mailer.user', { infer: true }),
+            pass: configService.get('mailer.pass', { infer: true }),
           },
         },
         template: {

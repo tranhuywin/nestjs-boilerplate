@@ -1,39 +1,40 @@
 import * as winston from 'winston'
-import * as DailyRotateFile from 'winston-daily-rotate-file'
+import DailyRotateFile from 'winston-daily-rotate-file'
 
 export class CustomLoggerService {
-  dailyRotateFileTransport: any = null
-  myFormat: winston.Logform.Format = null
-  createLoggerConfig: winston.LoggerOptions = null
+  dailyRotateFileTransport: DailyRotateFile | null = null
+  myFormat: winston.Logform.Format | null = null
+  createLoggerConfig: winston.LoggerOptions = {}
   constructor() {
     this.dailyRotateFileTransport = new DailyRotateFile({
       filename: `logs/app_log-%DATE%.log`,
       zippedArchive: false,
-      maxSize: '20m',
-      maxFiles: '1d',
+      maxFiles: '14d',
     })
 
-    this.myFormat = winston.format.printf(({ level = 'info', message, timestamp, req, err, ...metadata }) => {
-      if (!req) {
-        req = { headers: {} }
-      }
+    this.myFormat = winston.format.printf(
+      ({ level = 'info', message, timestamp, req, err, ...metadata }) => {
+        if (!req) {
+          req = { headers: {} }
+        }
 
-      let msg = `${timestamp} [${level}] : ${message} `
-      const json: any = {
-        timestamp,
-        level,
-        ...metadata,
-        message,
-        error: {},
-      }
+        let msg = `${timestamp} [${level}] : ${message} `
+        const json: any = {
+          timestamp,
+          level,
+          ...metadata,
+          message,
+          error: {},
+        }
 
-      if (err) {
-        json.error = err.stack || err
-      }
+        if (err) {
+          json.error = err.stack || err
+        }
 
-      msg = JSON.stringify(json)
-      return msg
-    })
+        msg = JSON.stringify(json)
+        return msg
+      },
+    )
 
     this.createLoggerConfig = {
       /** Warn level Also includes error * */
@@ -51,7 +52,6 @@ export class CustomLoggerService {
       transports: [
         new winston.transports.Console({ level: 'info' }),
         this.dailyRotateFileTransport,
-        // Other transports
       ],
     }
   }
